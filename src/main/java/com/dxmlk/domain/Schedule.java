@@ -1,50 +1,40 @@
 package com.dxmlk.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Schedule implements Serializable {
     private static final long serialVersionUID = 1L;
-    private List<Course> courses;
 
-    public Schedule() {
-        this.courses = new ArrayList<>();
+    private int studentId;  // 학생 ID (추가)
+    private List<String> courseNames; // 수강한 과목 리스트
+
+    public Schedule(int studentId, List<String> courseNames) {
+        this.studentId = studentId;
+        this.courseNames = courseNames;
     }
 
-    public boolean addCourse(Course course) {
-        if (isConflict(course)) {
-            return false; // 시간이 겹치면 추가 불가
-        }
-        courses.add(course);
-        return true;
+    public int getStudentId() { // 이거 추가!
+        return studentId;
     }
 
-    public boolean removeCourse(String courseName) {
-        return courses.removeIf(course -> course.getCourseName().equals(courseName));
+    public List<String> getCourseNames() {
+        return courseNames;
     }
 
-    public List<Course> getCourses() {
-        return new ArrayList<>(courses);
+    public void addCourse(String courseName) {
+        courseNames.add(courseName);
     }
 
-    private boolean isConflict(Course newCourse) {
-        for (Course existingCourse : courses) {
-            for (String day : newCourse.getDays()) {
-                if (List.of(existingCourse.getDays()).contains(day) && existingCourse.getTime().equals(newCourse.getTime())) {
-                    return true; // 요일과 시간이 겹치면 충돌 발생
-                }
-            }
-        }
-        return false;
+    public void removeCourse(String courseName) {
+        courseNames.remove(courseName);
     }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("[수강 신청 목록]\n");
-        for (Course course : courses) {
-            sb.append(course).append("\n");
-        }
-        return sb.toString();
+        return "Schedule{" +
+                "studentId=" + studentId +
+                ", courseNames=" + courseNames +
+                '}';
     }
 }
