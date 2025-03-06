@@ -8,8 +8,34 @@ import java.util.List;
 
 public class ScheduleStorage {
     private static final String FILE_NAME = "scheduleDB.dat";
+    private List<Schedule> schedules; // 메모리에서 관리할 리스트
 
-    public void saveSchedules(List<Schedule> schedules) {
+    public ScheduleStorage() {
+        this.schedules = loadSchedules(); // 파일에서 로드
+    }
+
+    public void addSchedule(Schedule schedule) {
+        schedules.add(schedule);
+        saveSchedules(); // 변경된 데이터 저장
+    }
+
+    public void removeSchedule(int studentId) {
+        schedules.removeIf(schedule -> schedule.getStudentId() == studentId);
+        saveSchedules(); // 변경된 데이터 저장
+    }
+
+    public Schedule getScheduleByStudentId(int studentId) {
+        return schedules.stream()
+                .filter(schedule -> schedule.getStudentId() == studentId)
+                .findFirst()
+                .orElse(null);
+    }
+
+    public List<Schedule> getAllSchedules() {
+        return new ArrayList<>(schedules);
+    }
+
+    private void saveSchedules() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_NAME))) {
             oos.writeObject(schedules);
         } catch (IOException e) {
@@ -17,7 +43,7 @@ public class ScheduleStorage {
         }
     }
 
-    public List<Schedule> loadSchedules() {
+    private List<Schedule> loadSchedules() {
         File file = new File(FILE_NAME);
         if (!file.exists()) {
             return new ArrayList<>();
