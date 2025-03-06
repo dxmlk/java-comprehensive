@@ -20,9 +20,10 @@ public class ScheduleService {
         scheduleStorage.removeSchedule(studentId);
     }
 
-    public Schedule getScheduleByStudentId(int studentId) {
+    public List<Schedule> getScheduleByStudentId(int studentId) {
         return scheduleStorage.getScheduleByStudentId(studentId);
     }
+
 
     public List<Schedule> getAllSchedules() {
         return scheduleStorage.getAllSchedules();

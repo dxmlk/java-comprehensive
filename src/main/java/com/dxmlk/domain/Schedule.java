@@ -1,40 +1,33 @@
 package com.dxmlk.domain;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class Schedule implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private String courseName;  // 과목명
+    private String time;        // 강의 시간 (예: "10:00")
+    private String day;         // 강의 요일 (예: "월수")
+    private int studentId;      // 수강하는 학생의 ID
 
-    private int studentId;  // 학생 ID (추가)
-    private List<String> courseNames; // 수강한 과목 리스트
-
-    public Schedule(int studentId, List<String> courseNames) {
+    public Schedule(String courseName, String time, String day, int studentId) {
+        this.courseName = courseName;
+        this.time = time;
+        this.day = day;
         this.studentId = studentId;
-        this.courseNames = courseNames;
+    }
+    
+    public String getCourseName() {
+        return courseName;
     }
 
-    public int getStudentId() { // 이거 추가!
+    public String getTime() {
+        return time;
+    }
+
+    public String getDay() {
+        return day;
+    }
+
+    public int getStudentId() {
         return studentId;
-    }
-
-    public List<String> getCourseNames() {
-        return courseNames;
-    }
-
-    public void addCourse(String courseName) {
-        courseNames.add(courseName);
-    }
-
-    public void removeCourse(String courseName) {
-        courseNames.remove(courseName);
-    }
-
-    @Override
-    public String toString() {
-        return "Schedule{" +
-                "studentId=" + studentId +
-                ", courseNames=" + courseNames +
-                '}';
     }
 }

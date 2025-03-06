@@ -24,12 +24,16 @@ public class ScheduleStorage {
         saveSchedules(); // 변경된 데이터 저장
     }
 
-    public Schedule getScheduleByStudentId(int studentId) {
-        return schedules.stream()
-                .filter(schedule -> schedule.getStudentId() == studentId)
-                .findFirst()
-                .orElse(null);
+    public List<Schedule> getScheduleByStudentId(int studentId) {
+        List<Schedule> studentSchedules = new ArrayList<>();
+        for (Schedule schedule : schedules) {
+            if (schedule.getStudentId() == studentId) {
+                studentSchedules.add(schedule);
+            }
+        }
+        return studentSchedules;
     }
+
 
     public List<Schedule> getAllSchedules() {
         return new ArrayList<>(schedules);
